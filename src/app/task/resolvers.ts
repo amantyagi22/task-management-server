@@ -25,7 +25,7 @@ const queries = {
 };
 
 const mutations = {
-    createTask: async (_: any, { title }: { title: string }) => {
+    createTask: async (_: any, { title, description }: { title: string, description: string }) => {
         if (!title || title.trim() === '') {
             return {
                 success: false,
@@ -36,7 +36,8 @@ const mutations = {
 
         const task = await prismaClient.task.create({
             data: { 
-                title: title.trim()
+                title: title.trim(),
+                description: description || ''
             }
         });
         return {
@@ -49,7 +50,7 @@ const mutations = {
             }
         };
     },
-    updateTask: async (_: any, { id, title, completed }: { id: string, title?: string, completed?: boolean }) => {
+    updateTask: async (_: any, { id, title, description, completed }: { id: string, title?: string, description?: string, completed?: boolean }) => {
         if (title !== undefined && (title === '' || title.trim() === '')) {
             return {
                 success: false,
@@ -62,6 +63,7 @@ const mutations = {
             where: { id },
             data: { 
                 title: title?.trim(),
+                description,
                 completed,
                 updatedAt: new Date()
             }
