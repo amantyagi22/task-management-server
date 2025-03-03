@@ -10,7 +10,7 @@ export async function initServer() {
 
     app.use(json());
     app.use(cors({
-        origin: 'https://task-management-rl4rw65nn-amantyagi22s-projects.vercel.app', // Your Next.js app URL
+        origin: "*",
         credentials: true
     }));
     
